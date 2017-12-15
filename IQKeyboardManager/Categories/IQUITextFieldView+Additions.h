@@ -1,5 +1,5 @@
 //
-// IQUITextFieldView+Additions.h
+//  IQUITextFieldView+Additions.h
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-16 Iftekhar Qurashi.
 //
@@ -21,11 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIView.h>
+#import <UIKit/UIKit.h>
 
 /**
  UIView category for managing UITextField/UITextView
  */
+
+typedef void(^IQResizeLogic)(CGFloat move, BOOL reset);
 
 @interface UIView (Additions)
 
@@ -33,11 +35,7 @@
  To set customized distance from keyboard for textField/textView. Can't be less than zero
  */
 @property(nonatomic, assign) CGFloat keyboardDistanceFromTextField;
-
-/**
- If shouldIgnoreSwitchingByNextPrevious is YES then library will ignore this textField/textView while moving to other textField/textView using keyboard toolbar next previous buttons. Default is NO
- */
-@property(nonatomic, assign) BOOL ignoreSwitchingByNextPrevious;
+@property(nonatomic, copy) IQResizeLogic customIQResizeLogic;
 
 @end
 

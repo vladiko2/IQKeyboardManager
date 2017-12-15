@@ -1,5 +1,5 @@
 //
-// IQUITextFieldView+Additions.m
+//  IQUITextFieldView+Additions.m
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-16 Iftekhar Qurashi.
 //
@@ -31,7 +31,7 @@
     //Can't be less than zero. Minimum is zero.
     keyboardDistanceFromTextField = MAX(keyboardDistanceFromTextField, 0);
     
-    objc_setAssociatedObject(self, @selector(keyboardDistanceFromTextField), @(keyboardDistanceFromTextField), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(keyboardDistanceFromTextField), [NSNumber numberWithFloat:keyboardDistanceFromTextField], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(CGFloat)keyboardDistanceFromTextField
@@ -41,16 +41,19 @@
     return (keyboardDistanceFromTextField)?[keyboardDistanceFromTextField floatValue]:kIQUseDefaultKeyboardDistance;
 }
 
--(void)setIgnoreSwitchingByNextPrevious:(BOOL)ignoreSwitchingByNextPrevious
-{
-    objc_setAssociatedObject(self, @selector(ignoreSwitchingByNextPrevious), @(ignoreSwitchingByNextPrevious), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+
+
+
+-(void)setCustomIQResizeLogic:(IQResizeLogic)customIQResizeLogic{
+    
+    objc_setAssociatedObject(self, @selector(customIQResizeLogic), customIQResizeLogic, OBJC_ASSOCIATION_COPY);
 }
 
--(BOOL)ignoreSwitchingByNextPrevious
+-(IQResizeLogic)customIQResizeLogic
 {
-    NSNumber *ignoreSwitchingByNextPrevious = objc_getAssociatedObject(self, @selector(ignoreSwitchingByNextPrevious));
-    
-    return [ignoreSwitchingByNextPrevious boolValue];
+    IQResizeLogic customIQResizeLogic = objc_getAssociatedObject(self, @selector(customIQResizeLogic));    
+    return customIQResizeLogic;
 }
 
 @end
@@ -64,3 +67,4 @@
  */
 CGFloat const kIQUseDefaultKeyboardDistance = CGFLOAT_MAX;
 
+NSString* const kIQResizeLogic = @"kIQResizeLogic";
