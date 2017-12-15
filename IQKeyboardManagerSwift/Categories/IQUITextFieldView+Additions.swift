@@ -53,6 +53,22 @@ public extension UIView {
             objc_setAssociatedObject(self, &kIQKeyboardDistanceFromTextField, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+
+    public var customIQResizeLogic: IQResizeLogic? {
+        get {
+            
+            if let aValue = objc_getAssociatedObject(self, &kIQResizeLogic) as? IQClosureWrapper<IQResizeLogic?> {
+                return aValue.closure
+            } else {
+                return nil
+            }
+        }
+        set(newValue) {
+            if(newValue != nil){
+                objc_setAssociatedObject(self, &kIQResizeLogic, IQClosureWrapper(newValue), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
     
     /**
      If shouldIgnoreSwitchingByNextPrevious is true then library will ignore this textField/textView while moving to other textField/textView using keyboard toolbar next previous buttons. Default is false
