@@ -37,6 +37,12 @@ typedef void(^IQResizeLogic)(CGFloat move, BOOL reset);
 @property(nonatomic, assign) CGFloat keyboardDistanceFromTextField;
 @property(nonatomic, copy) IQResizeLogic customIQResizeLogic;
 
+/**
+ If shouldIgnoreSwitchingByNextPrevious is YES then library will ignore this textField/textView while moving to other textField/textView using keyboard toolbar next previous buttons. Default is NO
+ */
+@property(nonatomic, assign) BOOL ignoreSwitchingByNextPrevious;
+
+
 @end
 
 ///-------------------------------------------

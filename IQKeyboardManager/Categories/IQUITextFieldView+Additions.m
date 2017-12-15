@@ -56,6 +56,18 @@
     return customIQResizeLogic;
 }
 
+-(void)setIgnoreSwitchingByNextPrevious:(BOOL)ignoreSwitchingByNextPrevious
+{
+    objc_setAssociatedObject(self, @selector(ignoreSwitchingByNextPrevious), @(ignoreSwitchingByNextPrevious), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(BOOL)ignoreSwitchingByNextPrevious
+{
+    NSNumber *ignoreSwitchingByNextPrevious = objc_getAssociatedObject(self, @selector(ignoreSwitchingByNextPrevious));
+    
+    return [ignoreSwitchingByNextPrevious boolValue];
+}
+
 @end
 
 ///------------------------------------
