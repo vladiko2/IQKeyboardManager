@@ -965,8 +965,11 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
 #endif
 
                 //  Setting it's new frame
-                unwrappedController.view.frame = newFrame
-                self.showLog("Set \(String(describing: controller?._IQDescription())) frame to : \(newFrame)")
+                if(self._textFieldView?.customIQResizeLogic != nil){
+                    self._textFieldView?.customIQResizeLogic?(move:unwrappedController.view.frame.origin.y - newFrame.origin.y, reset: false)
+                } else{
+                    unwrappedController.view.frame = newFrame
+                }
                 
                 //Animating content if needed (Bug ID: #204)
                 if self.layoutIfNeededOnUpdate == true {
@@ -1367,6 +1370,9 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                         //  Setting adjusted rootViewRect
                         setRootViewFrame(rootViewRect)
                         _privateMovedDistance = (_topViewBeginRect.origin.y-rootViewRect.origin.y)
+                    }else if(self._textFieldView?.customIQResizeLogic != nil){
+                        rootViewRect.origin.y -= move
+                        setRootViewFrame(rootViewRect)
                     }
                 }
             } else {  //If presentation style is neither UIModalPresentationFormSheet nor UIModalPresentationPageSheet then going ahead.(General case)
@@ -1704,6 +1710,10 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                     rootViewController.view.layoutIfNeeded()
                 }) { (finished) -> Void in }
             }
+        }
+
+  if(self._textFieldView?.customIQResizeLogic != nil){
+            self._textFieldView?.customIQResizeLogic!(move: 0, reset:true)
         }
         
         //Reset all values
